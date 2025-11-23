@@ -1,5 +1,10 @@
 package com.vitorota.kmp
 
+@JsModule("@js-joda/timezone")
+external object JsJodaTimeZoneModule
+
+private val jsJodaTz = JsJodaTimeZoneModule
+
 class WasmPlatform: Platform {
     override val name: String = "Web with Kotlin/Wasm"
 }

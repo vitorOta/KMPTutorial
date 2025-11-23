@@ -8,6 +8,15 @@ plugins {
     alias(libs.plugins.composeCompiler)
 }
 
+configurations.all {
+    resolutionStrategy.eachDependency {
+        if (requested.group == "org.jetbrains.kotlin" && requested.name.startsWith("kotlin-stdlib")) {
+            useVersion(libs.versions.kotlin.get())
+            because("Align Kotlin stdlib versions")
+        }
+    }
+}
+
 kotlin {
     androidTarget {
         compilerOptions {
@@ -42,8 +51,14 @@ kotlin {
             implementation(libs.androidx.activity.compose)
             implementation(libs.ktor.android)
         }
+
         iosMain.dependencies {
             implementation(libs.ktor.darwin)
+        }
+
+        webMain.dependencies {
+            implementation(npm("@js-joda/timezone", libs.versions.joda.timezone.get()))
+            implementation(libs.ktor.js)
         }
 
         commonMain.dependencies {
@@ -58,10 +73,6 @@ kotlin {
             implementation(libs.kotlinx.datetime)
             implementation(libs.coil.compose)
             implementation(libs.coil.ktor)
-        }
-
-        webMain.dependencies {
-            implementation(npm("@js-joda/timezone", libs.versions.joda.timezone.get()))
         }
 
         commonTest.dependencies {
@@ -100,4 +111,3 @@ android {
 dependencies {
     debugImplementation(compose.uiTooling)
 }
-

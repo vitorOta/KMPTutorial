@@ -41,12 +41,19 @@ import kotlin.time.ExperimentalTime
 @Preview
 fun App(countries: List<Country> = countries()) {
     MaterialTheme {
-
         var timeAtLocation by remember { mutableStateOf("No location selected") }
 
         Column(
-           modifier = Modifier.safeContentPadding()
+            modifier = Modifier.safeContentPadding()
         ) {
+            Text(
+                text = getPlatform().name,
+                textAlign = TextAlign.Center,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .align(Alignment.CenterHorizontally)
+            )
+
             Column(
                 verticalArrangement = Arrangement.spacedBy(24.dp, Alignment.CenterVertically),
                 modifier = Modifier
@@ -70,14 +77,6 @@ fun App(countries: List<Country> = countries()) {
                     modifier = Modifier.fillMaxWidth()
                 )
             }
-
-            Text(
-                text = getPlatform().name,
-                textAlign = TextAlign.Center,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .align(Alignment.CenterHorizontally)
-            )
         }
     }
 }
